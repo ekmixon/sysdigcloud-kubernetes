@@ -191,9 +191,12 @@ def wait_for_3_pods(services):
 def patch_upgrade_yaml(yaml_file, storageclass_name):
     dicts = get_yaml_objects(yaml_file)
     for item in dicts:
-        if item["kind"] == "PersistentVolumeClaim":
-            if "spec" in item and "storageClassName" in item["spec"]:
-                item["spec"]["storageClassName"] = storageclass_name
+        if (
+            item["kind"] == "PersistentVolumeClaim"
+            and "spec" in item
+            and "storageClassName" in item["spec"]
+        ):
+            item["spec"]["storageClassName"] = storageclass_name
     return dicts
 
 
